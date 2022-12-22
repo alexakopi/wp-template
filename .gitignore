@@ -5,6 +5,7 @@
 #except
 !README.md
 !local-setup.sh.temp
+!.gitignore
 
 !wp-content
 !wp-content/*
