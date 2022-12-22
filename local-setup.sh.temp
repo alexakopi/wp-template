@@ -1,0 +1,47 @@
+#! /bin/bash
+
+# CONFIGURATION VARIABLES
+
+#base url of the website
+LOCAL_SITE_URL=http://localhost:8000/
+#title of the website
+LOCAL_SITE_TITLE=`Flatrock`
+#admin user user
+LOCAL_SITE_USER=user
+#admin user password
+LOCAL_SITE_PASSWORD=userpass
+#admin user email
+LOCAL_SITE_EMAIL=user@gmail.com
+#list of the plugins to be installed
+PLUGINS=('akismet' 'contact-form-7')
+#version of the wordpress to be installed
+WP_CORE_VERSION=6.0
+#databese host, address where mysql database is located
+WP_DB_HOST=127.0.0.1
+#mysql database name
+WP_DB_NAME=db_name
+#mysql database user
+WP_DB_USER=db_user
+#mysql database user name
+WP_DB_PASS=db_user_pass
+#mysql database table prefix
+WP_DB_TABLE_PREFIX=frtech_
+
+# CONFIGURATION VARIABLES
+
+
+
+
+#INSTALL SCRIPT
+
+wp core download --allow-root --force --version=$WP_CORE_VERSION --skip-content
+wp core config --allow-root --force --dbname=$WP_DB_NAME --dbuser=$WP_DB_USER --dbpass=$WP_DB_PASS --dbhost=$WP_DB_HOST
+wp config set table_prefix $WP_DB_TABLE_PREFIX
+wp core install --allow-root --url=$LOCAL_SITE_URL --title=$LOCAL_SITE_TITLE --admin_user=$LOCAL_SITE_USER --admin_password=$LOCAL_SITE_PASSWORD --admin_email=$LOCAL_SITE_EMAIL
+for i in "${PLUGINS[@]}"
+do
+	wp plugin install --allow-root --force $i
+done
+wp core verify-checksums
+
+#INSTALL SCRIPT
